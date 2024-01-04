@@ -1,15 +1,18 @@
-import express from "express";
-import mongoose from "mongoose";
-const app = express();
+import  Express  from 'express';
+import {mongoDB} from './db.js';
+import router from './Routes/CreateUser.js';
+
+const app = Express();
 const port = 3010;
+
+mongoDB();
+
+app.use('/api', router)
+app.use(Express.json())
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
-mongoose.connect(
-    "mongodb+srv://mishrasuyash411:z8b6CG4iQQ9fZ7VH@cluster0.k7ae3fa.mongodb.net/?retryWrites=true&w=majority"
-)
-.then(()=>app.listen(3010))
-.then(()=>console.log('connected to port'))
-.then(()=>console.log("db connected"))
-.catch((err)=>console.log(err));
+app.listen(port,()=>{
+  console.log(`listening to ${port}`)
+})
